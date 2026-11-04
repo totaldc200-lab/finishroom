@@ -6,9 +6,9 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' blob: data:; media-src 'self' blob: data:; worker-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!-- integrity: the CDN files must match these hashes byte for byte, or the browser refuses to run them. Update together with the versions. -->
-<script type="importmap">{"imports":{"mediabunny":"https://cdn.jsdelivr.net/npm/mediabunny@1.61.4/dist/bundles/mediabunny.min.mjs"},"integrity":{
-"https://cdn.jsdelivr.net/npm/mediabunny@1.61.4/dist/bundles/mediabunny.min.mjs":"sha384-l0xUE5BjLcTpYp0FoNmmTcHgHK/PF4+OOFl9fqJ+8Xv9bMalEeREIfO0X9wW332V",
-"https://cdn.jsdelivr.net/npm/@mediabunny/prores@1.61.4/dist/bundles/mediabunny-prores.min.mjs":"sha384-DcBonEV3UIO8AoqQcUDUDhoPLNNpbdXHkEyvY9OFjcRzM7uuQnw0NQWl8q5L1jGE",
+<script type="importmap">{"imports":{"mediabunny":"https://cdn.jsdelivr.net/npm/mediabunny@1.65.2/dist/bundles/mediabunny.min.mjs"},"integrity":{
+"https://cdn.jsdelivr.net/npm/mediabunny@1.65.2/dist/bundles/mediabunny.min.mjs":"sha384-T8lmpVp710kO8OFEAS/UhBhlhU102lbCXVAGQN/ctafcLzmcPchyQNH1AAqJntUX",
+"https://cdn.jsdelivr.net/npm/@mediabunny/prores@1.65.2/dist/bundles/mediabunny-prores.min.mjs":"sha384-bA6aP3tmTtQntzOEJTkV9TxFCu8QphQs7WH2F6+GJ/eFBpD7BjAgYrODrR+Nock+",
 "https://cdn.jsdelivr.net/npm/@suemor/libav-hevc@0.1.1/dist/libav-6.10.9.0-decoder-hevc.mjs":"sha384-wnYsXOKrqjwTE/phlpeHh4ZvA5maux3CNElzdMAy5CwG6UVth2UMHp1fTB4OWsEz",
 "https://cdn.jsdelivr.net/npm/@suemor/libav-hevc@0.1.1/dist/libav-6.10.9.0-decoder-hevc.wasm.mjs":"sha384-meN8NntSBVo+vNdnUjmlCY9DgsywYxnXos/zzk80PoboC/j1PV8bVXt2HP3M32zU"}}</script>
 <meta name="description" content="Make every clip look like your reference: automatic color matching in the browser.">
@@ -958,7 +958,7 @@ module.exports={createLutRenderer,createCpuRenderer};
 __def("exporter",function(module,exports,require){
 // Re-encodes a clip with its scene LUTs applied to every frame (Mediabunny + WebCodecs), keeping the audio.
 const {createLutRenderer,createCpuRenderer}=require("./render.js");
-const MEDIABUNNY_URL="https://cdn.jsdelivr.net/npm/mediabunny@1.61.4/dist/bundles/mediabunny.min.mjs";
+const MEDIABUNNY_URL="https://cdn.jsdelivr.net/npm/mediabunny@1.65.2/dist/bundles/mediabunny.min.mjs";
 let mediabunny=null;
 const lib=async()=>mediabunny||(mediabunny=await import(MEDIABUNNY_URL));
 
@@ -1002,7 +1002,7 @@ __def("codecs",function(module,exports,require){
 // ProRes (stock footage) via the official Mediabunny extension, and HEVC incl. 10-bit (Higgsfield and other
 // AI video, on Macs/PCs without HEVC hardware) via an FFmpeg HEVC decoder compiled to WebAssembly.
 // Both are only loaded after the browser has said it can't decode the file itself.
-const PRORES_URL="https://cdn.jsdelivr.net/npm/@mediabunny/prores@1.61.4/dist/bundles/mediabunny-prores.min.mjs";
+const PRORES_URL="https://cdn.jsdelivr.net/npm/@mediabunny/prores@1.65.2/dist/bundles/mediabunny-prores.min.mjs";
 const LIBAV_URL="https://cdn.jsdelivr.net/npm/@suemor/libav-hevc@0.1.1/dist/libav-6.10.9.0-decoder-hevc.mjs";
 const AVMEDIA_TYPE_VIDEO=0;
 

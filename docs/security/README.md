@@ -7,7 +7,7 @@
 | F-01 | 2026-11-04 | Med | 수정(브랜치) | importmap `integrity`로 CDN 모듈 4개 해시 고정. Chromium에서 변조 차단 확인. Safari·Firefox 지원 여부 미확인(미지원 시 무시되고 정상 동작) |
 | F-02 | 2026-11-04 | Med | 수정(브랜치) | CSP 메타 추가(`connect-src 'self' blob: data:`로 외부 전송 차단). 인라인 스크립트 때문에 `unsafe-inline` 유지 |
 | F-05 | 2026-11-04 | Med | 부분 수정 | 20GB·8K·3시간 상한 추가. HEVC WASM의 Worker 이전은 미해결 |
-| F-09 | 2026-11-05 | Med | 미해결 | mediabunny 1.61.4 → 1.65.2 (1.62.0 악성 입력 강화 패치 누락) |
+| F-09 | 2026-11-05 | Med | 수정(브랜치) | mediabunny·prores 1.65.2로 업그레이드, integrity 해시 갱신 |
 | F-03 | 2026-11-04 | Low | 미해결 | Google Fonts 프라이버시 |
 | F-04 | 2026-11-04 | Low | 미해결 | 로컬 모드·테스트 훅이 공개 빌드에 존재 |
 | F-06 | 2026-11-04 | Low | 수정(브랜치) | `<meta name="referrer" content="no-referrer">` |
