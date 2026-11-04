@@ -4,11 +4,13 @@
 
 | ID | 최초 발견일 | 심각도 | 상태 | 요약 |
 |---|---|---|---|---|
-| F-01 | 2026-11-04 | Med | 미해결 | CDN 모듈 SRI 없음(벤더링 권장) |
-| F-02 | 2026-11-04 | Med | 미해결 | CSP 없음 |
-| F-05 | 2026-11-04 | Med | 미해결 | 파일/해상도/길이 한도 없음, HEVC WASM 메인 스레드 |
+| F-01 | 2026-11-04 | Med | 수정(브랜치) | importmap `integrity`로 CDN 모듈 4개 해시 고정. Chromium에서 변조 차단 확인. Safari·Firefox 지원 여부 미확인(미지원 시 무시되고 정상 동작) |
+| F-02 | 2026-11-04 | Med | 수정(브랜치) | CSP 메타 추가(`connect-src 'self' blob: data:`로 외부 전송 차단). 인라인 스크립트 때문에 `unsafe-inline` 유지 |
+| F-05 | 2026-11-04 | Med | 부분 수정 | 20GB·8K·3시간 상한 추가. HEVC WASM의 Worker 이전은 미해결 |
 | F-03 | 2026-11-04 | Low | 미해결 | Google Fonts 프라이버시 |
 | F-04 | 2026-11-04 | Low | 미해결 | 로컬 모드·테스트 훅이 공개 빌드에 존재 |
-| F-06 | 2026-11-04 | Low | 미해결 | Referrer-Policy 없음 |
+| F-06 | 2026-11-04 | Low | 수정(브랜치) | `<meta name="referrer" content="no-referrer">` |
 | F-07 | 2026-11-04 | Low | 미해결(수용 가능) | 클릭재킹 헤더 설정 불가 |
 | F-08 | 2026-11-04 | Info | 종결 | setStatus textContent 확인(XSS 경로 없음) |
+
+> 2026-11-04 수정분은 `ccr-7f9d7924-5dyc1m` 브랜치에 있음. main에 합쳐야 배포됨.

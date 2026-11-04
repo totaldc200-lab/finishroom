@@ -3,7 +3,14 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FinishRoom 종편실</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<script type="importmap">{"imports":{"mediabunny":"https://cdn.jsdelivr.net/npm/mediabunny@1.61.4/dist/bundles/mediabunny.min.mjs"}}</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' blob: data:; media-src 'self' blob: data:; worker-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<!-- integrity: the CDN files must match these hashes byte for byte, or the browser refuses to run them. Update together with the versions. -->
+<script type="importmap">{"imports":{"mediabunny":"https://cdn.jsdelivr.net/npm/mediabunny@1.61.4/dist/bundles/mediabunny.min.mjs"},"integrity":{
+"https://cdn.jsdelivr.net/npm/mediabunny@1.61.4/dist/bundles/mediabunny.min.mjs":"sha384-l0xUE5BjLcTpYp0FoNmmTcHgHK/PF4+OOFl9fqJ+8Xv9bMalEeREIfO0X9wW332V",
+"https://cdn.jsdelivr.net/npm/@mediabunny/prores@1.61.4/dist/bundles/mediabunny-prores.min.mjs":"sha384-DcBonEV3UIO8AoqQcUDUDhoPLNNpbdXHkEyvY9OFjcRzM7uuQnw0NQWl8q5L1jGE",
+"https://cdn.jsdelivr.net/npm/@suemor/libav-hevc@0.1.1/dist/libav-6.10.9.0-decoder-hevc.mjs":"sha384-wnYsXOKrqjwTE/phlpeHh4ZvA5maux3CNElzdMAy5CwG6UVth2UMHp1fTB4OWsEz",
+"https://cdn.jsdelivr.net/npm/@suemor/libav-hevc@0.1.1/dist/libav-6.10.9.0-decoder-hevc.wasm.mjs":"sha384-meN8NntSBVo+vNdnUjmlCY9DgsywYxnXos/zzk80PoboC/j1PV8bVXt2HP3M32zU"}}</script>
 <meta name="description" content="Make every clip look like your reference: automatic color matching in the browser.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -121,6 +128,7 @@ const STRINGS={
   xHevcApp:"{name}은(는) HEVC(H.265) 영상이라 Claude 앱 화면에서는 열 수 없어요. 같은 주소를 크롬이나 사파리에서 열면 돼요. 기준으로만 쓸 거라면 스크린샷을 여러 장 넣어도 돼요.",
   xProResRef:"{name}은(는) ProRes(전문가용 원본) 영상이라 브라우저가 열 수 없어요. 그 영상에서 스크린샷을 3~5장 찍어(맥: ⌘+Shift+4) 여기에 한꺼번에 넣어 주세요. 여러 장일수록 더 정확해요.",
   xProRes:"{name}은(는) ProRes(전문가용 원본) 영상이라 브라우저가 열 수 없어요. 편집 프로그램에서 H.264 MP4로 내보낸 뒤 넣어 주세요.",
+  xTooBig:"{name}은(는) 너무 크거나 길어서 열 수 없어요(최대 8K 해상도, 3시간, 20GB). 잘라서 넣어 주세요.",
   xHevc:"{name}은(는) HEVC(H.265) 영상인데 이 브라우저에서는 열리지 않아요. 크롬 최신 버전에서 열거나, H.264 MP4로 바꿔서 넣어 주세요.",
   xRefImages:"{name} 등 {n}장",
   xLead:"기준 영상·이미지의 색감과 느낌을 내 영상에 그대로 입혀 드려요.",xStep1:"기준 넣기",xStep1Hint:"이런 느낌으로 만들고 싶은 영상 하나, 또는 스크린샷 여러 장",
@@ -168,6 +176,7 @@ const STRINGS={
   xHevcApp:"{name} is HEVC (H.265), which the Claude app viewer can't open. Open this same page in Chrome or Safari. For a reference, several screenshots also work.",
   xProResRef:"{name} is ProRes, which browsers can't open. Take 3–5 screenshots of it (Mac: ⌘+Shift+4) and drop them here together. More screenshots match better.",
   xProRes:"{name} is ProRes, which browsers can't open. Export it as H.264 MP4 from your editor first.",
+  xTooBig:"{name} is too large or too long to open (max 8K resolution, 3 hours, 20 GB). Trim it and try again.",
   xHevc:"{name} is HEVC (H.265) and this browser can't open it. Try the latest Chrome or convert it to H.264 MP4.",
   xRefImages:"{n} images, starting with {name}",
   xLead:"Give your videos the color and feel of a reference video or image.",xStep1:"Add a reference",xStep1Hint:"One video with the look you want, or several screenshots",
@@ -215,6 +224,7 @@ const STRINGS={
   xHevcApp:"{name} 是 HEVC (H.265) 视频，Claude 应用内无法打开。请在 Chrome 或 Safari 中打开同一页面。若只作参考，也可以放入多张截图。",
   xProResRef:"{name} 是 ProRes 格式，浏览器无法打开。请从该视频截取 3–5 张截图（Mac：⌘+Shift+4）一起拖到这里，截图越多越准确。",
   xProRes:"{name} 是 ProRes 格式，浏览器无法打开。请先在剪辑软件中导出为 H.264 MP4。",
+  xTooBig:"{name} 过大或过长，无法打开（最大 8K 分辨率、3 小时、20 GB）。请裁剪后重试。",
   xHevc:"{name} 是 HEVC (H.265) 视频，此浏览器无法打开。请使用最新版 Chrome，或转换为 H.264 MP4。",
   xRefImages:"{name} 等 {n} 张",
   xLead:"把参考视频或图片的色彩和感觉，套用到你的视频上。",xStep1:"添加参考",xStep1Hint:"一段展示你想要感觉的视频，或多张截图",
@@ -1091,12 +1101,17 @@ function pixels(canvas){
 }
 // Returns {duration, frame(time, width), frames(times, width) async iterator, close()} or throws "unreadable"
 // (with .codec set when the container is fine but the browser cannot decode that codec).
+// Upper bounds so a huge or malformed file is refused up front instead of freezing the tab.
+const MAX_BYTES=20*1024**3,MAX_PIXELS=8192*4320,MAX_SECONDS=3*3600;
+const tooBig=()=>{const err=Error("unreadable");err.limit=true;return err;};
 async function openMedia(file){
+ if(file.size>MAX_BYTES)throw tooBig();
  const mb=await lib();
  const input=new mb.Input({source:new mb.BlobSource(file),formats:mb.ALL_FORMATS});
  let track=null;
  try{track=await input.getPrimaryVideoTrack();}catch(e){/* not a container we can read */}
  if(!track)throw Error("unreadable");
+ if(!(track.displayWidth*track.displayHeight<=MAX_PIXELS&&track.codedWidth*track.codedHeight<=MAX_PIXELS))throw tooBig();
  // When the browser can't decode it, fall back to a software decoder (ProRes, HEVC) before giving up,
  // and name the codec if even that fails so the page can say what to do.
  let software=false;
@@ -1106,7 +1121,9 @@ async function openMedia(file){
   software=true;
  }
  // Many exported/cut files start a frame or two after 0 s; asking for t=0 there returns nothing.
- const duration=await input.computeDuration(),first=Math.max(0,await track.getFirstTimestamp().catch(()=>0)),sinks=new Map();
+ const duration=await input.computeDuration();
+ if(!(duration<=MAX_SECONDS))throw tooBig();
+ const first=Math.max(0,await track.getFirstTimestamp().catch(()=>0)),sinks=new Map();
  const sink=width=>{if(!sinks.has(width))sinks.set(width,new mb.CanvasSink(track,{width,poolSize:2}));return sinks.get(width);};
  const clampTime=t=>Math.max(first,Math.min(t,duration-1e-3));
  return {
@@ -1171,6 +1188,7 @@ const state={clips:[],ref:null,strength:.6,busy:false,status:{ref:"",clip:"",sav
 async function openOrExplain(file,asReference){
  try{return await openMedia(file);}
  catch(e){
+  if(e&&e.limit)throw Error(t("xTooBig",{name:file.name}));
   if(e&&e.codec==="prores")throw Error(t(asReference?"xProResRef":"xProRes",{name:file.name}));
   // The Claude desktop app's viewer has no HEVC decoder; regular Chrome/Safari on a Mac usually does.
   if(e&&e.codec==="hevc")throw Error(t(/\bClaude\//.test(navigator.userAgent)?"xHevcApp":"xHevc",{name:file.name}));
